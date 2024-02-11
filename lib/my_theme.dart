@@ -4,7 +4,7 @@ class MyTheme {
   /// colors, Theme Light Mode , theme Dark Mode
   static Color blackColor = Color(0xff242424);
   static Color primaryLight = Color(0xffB7935F);
-  static Color whiteColor = Color(0x7bffffff);
+  static Color whiteColor = Color(0xffffffff);
   static ThemeData lightMode = ThemeData(
     primaryColor: primaryLight,
     scaffoldBackgroundColor: Colors.transparent,
