@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami_application/home/quran/item_sura_detials_name.dart';
 import 'package:islami_application/my_theme.dart';
+import 'package:islami_application/providers/app_config_procider.dart';
+import 'package:provider/provider.dart';
 
 class SuraDetails extends StatefulWidget {
   static const String routeName = "SuraDetailsSecreen";
@@ -15,35 +17,39 @@ class _SuraDetailsState extends State<SuraDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments as SuraDetailsArgs;
+    var provider = Provider.of<AppConfigProvider>(context);
+    var args = ModalRoute.of(context)?.settings.arguments as SuraDetailsArgs;
     if (verses.isEmpty) {
       loadfile(args.index);
     }
     return Stack(children: [
-      Image.asset(
-        "assets/images/main_background.png",
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.fill,
-      ),
+      provider.isThemeDarkMode()
+          ? Image.asset(
+              "assets/images/main_backgroun_dark.png",
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.fill,
+            )
+          : Image.asset(
+              "assets/images/main_background.png",
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.fill,
+            ),
       Scaffold(
         appBar: AppBar(
           title: Text(
             "${args.name}",
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         body: verses.isEmpty
             ? Center(
             child: CircularProgressIndicator(
-              color: MyTheme.primaryLight,
-            ))
+              color: provider.isThemeDarkMode()
+                    ? MyTheme.yellowColor
+                    : MyTheme.primaryLight,
+              ))
             : Container(
           margin: EdgeInsets.symmetric(
             horizontal: MediaQuery
@@ -56,9 +62,11 @@ class _SuraDetailsState extends State<SuraDetails> {
                 .height * 0.06,
           ),
           decoration: BoxDecoration(
-            color: MyTheme.whiteColor,
-            borderRadius: BorderRadius.circular(40),
-          ),
+            color: provider.isThemeDarkMode()
+                      ? MyTheme.primarydark
+                      : MyTheme.whiteColor,
+                  borderRadius: BorderRadius.circular(40),
+                ),
           child: ListView.separated(
             separatorBuilder: (context, index) =>
                 Divider(

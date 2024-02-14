@@ -7,5 +7,12 @@
     "quran":"Quran",
     "hadith":"Hadith",
     "sebha":"Beads",
-    "radio":"Radio"
+    "radio":"Radio",
+    "settings":"Settings",
+    "language":"Language",
+    "english":"English",
+    "arabic":"Arabic",
+    "theme":"Theme",
+    "dark":"Dark",
+    "light":"Light"
 }

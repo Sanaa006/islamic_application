@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:islami_application/home/hadeth/hadeth_tab.dart';
 import 'package:islami_application/home/hadeth/item_hadeth_detials_name.dart';
 import 'package:islami_application/my_theme.dart';
+import 'package:islami_application/providers/app_config_procider.dart';
+import 'package:provider/provider.dart';
 
 class HadethDetails extends StatefulWidget {
   static const String routeName = "HadethDetailsSecreen";
@@ -13,25 +15,27 @@ class HadethDetails extends StatefulWidget {
 class _HadethDetailsState extends State<HadethDetails> {
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute
-        .of(context)
-        ?.settings
-        .arguments as Ahadeth;
+    var provider = Provider.of<AppConfigProvider>(context);
+    var args = ModalRoute.of(context)?.settings.arguments as Ahadeth;
     return Stack(children: [
-      Image.asset(
-        "assets/images/main_background.png",
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.fill,
-      ),
+      provider.isThemeDarkMode()
+          ? Image.asset(
+              "assets/images/main_backgroun_dark.png",
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.fill,
+            )
+          : Image.asset(
+              "assets/images/main_background.png",
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.fill,
+            ),
       Scaffold(
         appBar: AppBar(
           title: Text(
             "${args.title}",
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         body: Container(
@@ -46,7 +50,9 @@ class _HadethDetailsState extends State<HadethDetails> {
                 .height * 0.06,
           ),
           decoration: BoxDecoration(
-            color: MyTheme.whiteColor,
+            color: provider.isThemeDarkMode()
+                ? Theme.of(context).primaryColor
+                : MyTheme.whiteColor,
             borderRadius: BorderRadius.circular(40),
           ),
           child: ListView.builder(
