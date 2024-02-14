@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islami_application/my_theme.dart';
+import 'package:islami_application/providers/app_config_procider.dart';
+import 'package:provider/provider.dart';
 
 class SebhaTab extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class _SebhaTabState extends State<SebhaTab> {
   int index = 0;
 
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -21,14 +25,19 @@ class _SebhaTabState extends State<SebhaTab> {
           child: Column(
             children: [
               Container(
-                child: Image.asset("assets/images/head_of_sebhaa.png",
+                child: Image.asset(
+                    provider.isThemeDarkMode()
+                        ? "assets/images/head_of_sebhaa_dark.png"
+                        : "assets/images/head_of_sebhaa.png",
                     fit: BoxFit.cover),
                 height: 90,
               ),
               Transform.rotate(
                 angle: turns,
                 child: InkWell(
-                    child: Image.asset("assets/images/sebha_image.png"),
+                    child: Image.asset(provider.isThemeDarkMode()
+                        ? "assets/images/sebha_image_dark.png"
+                        : "assets/images/sebha_image.png"),
                     onTap: () {
                       incrimntCounter();
                       setState(() {
@@ -40,11 +49,8 @@ class _SebhaTabState extends State<SebhaTab> {
           ),
         ),
         Text(
-          "Numbet of AlTaspihat",
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleSmall,
+          AppLocalizations.of(context)!.number_of_altaspihat,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         Container(
           padding: EdgeInsets.symmetric(vertical: 23, horizontal: 15),
@@ -63,16 +69,20 @@ class _SebhaTabState extends State<SebhaTab> {
         Container(
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Theme
-                  .of(context)
-                  .primaryColor),
+              borderRadius: BorderRadius.circular(35),
+              color: provider.isThemeDarkMode()
+                  ? Theme.of(context).primaryColorDark
+                  : Theme.of(context).primaryColor),
           child: Text(tsapeh[index],
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: MyTheme.whiteColor)),
+              style: provider.isThemeDarkMode()
+                  ? Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: MyTheme.blackColor)
+                  : Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: MyTheme.whiteColor)),
         )
       ],
     );
